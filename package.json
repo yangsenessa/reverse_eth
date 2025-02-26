@@ -1,0 +1,39 @@
+{
+  "name": "reverse_eth",
+  "version": "1.0.0",
+  "description": "$ npm install -g truffle",
+  "keywords": [
+    "reverse",
+    "solidity",
+    "eth"
+  ],
+  "homepage": "https://github.com/yangsenessa/reverse_eth#readme",
+  "bugs": {
+    "url": "https://github.com/yangsenessa/reverse_eth/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangsenessa/reverse_eth.git"
+  },
+  "license": "ISC",
+  "author": "Frank.Yeo",
+  "type": "commonjs",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0",
+    "@truffle/hdwallet-provider": "^2.1.15",
+    "dotenv": "^16.4.7",
+    "openzeppelin-solidity": "^1.12.0"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.16",
+    "chai": "^4.5.0",
+    "ganache-cli": "^6.12.2"
+  }
+}
