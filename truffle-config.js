@@ -42,6 +42,10 @@
  */
 
 require('dotenv').config();
+// Check if environment variables were loaded successfully
+if (!process.env.MNEMONIC || !process.env.PROJECT_ID) {
+  console.error('Error: Please ensure that .env file contains MNEMONIC and PROJECT_ID');
+}
 const { MNEMONIC, PROJECT_ID } = process.env;
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
