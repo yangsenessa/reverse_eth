@@ -68,7 +68,9 @@ module.exports = async function (deployer, network, accounts) {
             
             if (i < 3) {
                 // First 3 accounts: 2 year vesting
-                specificDuration = 2 * 365 * 24 * 60 * 60;
+                specificDuration = 0; // Set duration to 0 for immediate release after 2-year wait period
+                // Start time after 2 years (current time + 2 years)
+                specificStartTime = startTimestamp + (2 * 365 * 24 * 60 * 60);
                 console.log(`  - 2 year vesting (${specificDuration} seconds)`);
             } else if (i < 6) {
                 // Next 3 accounts: 1 year vesting with 6 month cliff

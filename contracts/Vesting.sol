@@ -24,7 +24,6 @@ contract ReverseVesting is Ownable, VestingWallet {
         VestingWallet(beneficiaryAddress, startTimestamp, durationSeconds)
     {
         require(beneficiaryAddress != address(0), "Beneficiary cannot be zero address");
-        require(durationSeconds > 0, "Vesting duration must be greater than 0");
     }
 
     /**
