@@ -34,12 +34,12 @@ contract ReverseInnerSeller is ReentrancyGuard, Ownable {
     /**
      * @dev Constructor initializes the contract with REV and USDT token addresses
      * @param _revToken Address of the REV token contract
-     * @param _usdtToken Address of the account which used to recieving payments
+     * @param _usdtReceiver Address of the account which used to recieving payments
      */
-    constructor(address _revToken, address _usdtToken) Ownable(msg.sender) {
+    constructor(address _revToken, address _usdtReceiver) Ownable(msg.sender) {
         require(_revToken != address(0), "REV token address cannot be zero");
-        require(_usdtToken != address(0), "USDT recipient address cannot be zero");
-        usdtReceiver = _usdtToken;
+        require(_usdtReceiver != address(0), "USDT receiver address cannot be zero");
+        usdtReceiver = _usdtReceiver;
         revToken = Reverse(_revToken);
         usdtToken = IERC20(0xdAC17F958D2ee523a2206206994597C13D831ec7); // ETH mainnet USDT address
         

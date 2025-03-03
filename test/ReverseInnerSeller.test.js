@@ -14,18 +14,28 @@ contract('ReverseInnerSeller', function (accounts) {
     // Convert to smallest units with proper decimals
     const toUSDT = (amount) => new BN(amount).mul(new BN('10').pow(USDT_DECIMALS));
     const toREV = (amount) => new BN(amount).mul(new BN('10').pow(REV_DECIMALS));
+    // Log the account addresses
+    console.log('Owner address:', owner);
+    console.log('Buyer address:', buyer);
+    console.log('USDT Receiver address:', usdtReceiver);
+    console.log('New Owner address:', newOwner);
     
     beforeEach(async function () {
         // Deploy tokens
         this.revToken = await Reverse.new({ from: owner });
-        this.usdtToken = await MockERC20.new('Tether USD', 'USDT', USDT_DECIMALS, { from: owner });
+        this.usdtToken = await MockERC20.new('Tether USD', 'USDT', USDT_DECIMALS.toNumber(), { from: owner });
         
         // Deploy seller contract
         this.seller = await ReverseInnerSeller.new(
             this.revToken.address,
-            this.usdtToken.address, // Corrected parameter
+            usdtReceiver, // Corrected parameter
             { from: owner }
         );
+        // Log the token addresses
+        console.log('REV Token address:', this.revToken.address);
+        console.log('USDT Token address:', this.usdtToken.address);
+        console.log('ReverseInnerSeller contract address:', this.seller.address);
+        console.log('REV Token address from seller contract:', await this.seller.revToken());
         
         // Seed the seller contract with REV tokens
         const sellerRevAmount = toREV('500000');
@@ -37,14 +47,15 @@ contract('ReverseInnerSeller', function (accounts) {
     });
     
     describe('Initialization', function () {
-        it('has correct REV token address!!', async function () {
-            expect(await this.seller.revToken.address).to.equal(this.revToken.address);
-        });
 
         it('has correct USDT receiver address', async function () {
             expect(await this.seller.usdtReceiver()).to.equal(usdtReceiver);
         });
-        
+
+        it('has correct REV token address!!', async function () {
+            expect(await this.seller.revToken.address).to.equal(this.revToken.address);
+        });
+  
         it('has correct initial price tiers', async function () {
             // Check price tier 1: 3,000 USDT = 5,000 REV
             expect(await this.seller.priceTiers(toUSDT('3000'))).to.be.bignumber.equal(toREV('5000'));
