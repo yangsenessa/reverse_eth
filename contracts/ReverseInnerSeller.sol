@@ -18,7 +18,7 @@ contract ReverseInnerSeller is ReentrancyGuard, Ownable {
     address public usdtReceiver;
     
     // USDT token contract - ETH Mainnet USDT address
-    IERC20 public immutable usdtToken;
+    IERC20 public  usdtToken;
     
     // Price tiers mapping: USDT amount => REV amount
     mapping(uint256 => uint256) public priceTiers;
@@ -176,7 +176,23 @@ contract ReverseInnerSeller is ReentrancyGuard, Ownable {
         
         require(revToken.transfer(owner(), amount), "REV transfer failed");
     }
-    
+    /**
+     * @dev Allows owner to change USDT token contract address
+     * @param _usdtToken New USDT token contract address
+     */
+    function setUsdtToken(address _usdtToken) external onlyOwner {
+        require(_usdtToken != address(0), "USDT token address cannot be zero");
+        usdtToken = IERC20(_usdtToken);
+    }
+
+    /**
+     * @dev Allows owner to change USDT receiver address
+     * @param _usdtReceiver New USDT receiver address
+     */
+    function setUsdtReceiver(address _usdtReceiver) external onlyOwner {
+        require(_usdtReceiver != address(0), "USDT receiver address cannot be zero");
+        usdtReceiver = _usdtReceiver;
+    }
     /**
      * @dev Rejects any ETH accidentally sent to this contract
      */

@@ -9,7 +9,13 @@ contract('ReverseVesting', function (accounts) {
     const duration = 1000; // 1000 seconds
     
     beforeEach(async function () {
-        this.token = await Reverse.new({ from: deployer });
+        this.token = await Reverse.new(
+            "Reverse", 
+            "REV", 
+            200000000, 
+            18, 
+            { from: deployer }
+        );
         this.vesting = await ReverseVesting.new(
             beneficiary,
             startTime,

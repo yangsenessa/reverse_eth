@@ -182,5 +182,9 @@ truffle migrate --reset --network development --verbose-rpc
 
 
 # deploy  truffle migrate --reset --verbose-rpc
--- ganache-cli --gasLimit=80000000
+-- ganache-cli --gasLimit=800000000 
 -- truffle migrate --reset --verbose-rpc --network ganache
+
+# test
+truffle test --network ganache
+truffle test ./test/ReverseInnerSeller.test.js --network ganache

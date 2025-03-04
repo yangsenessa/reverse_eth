@@ -6,7 +6,11 @@ contract('Reverse', function (accounts) {
   const [deployer, recipient, spender] = accounts;
   
   beforeEach(async function () {
-    this.token = await Reverse.new({ from: deployer });
+    const name = "Reverse";
+    const symbol = "REV";
+    const initialSupply = 200000000;
+    const tokenDecimals = 18;
+    this.token = await Reverse.new(name, symbol, initialSupply, tokenDecimals, { from: deployer });
   });
   
   describe('Token Info', function () {

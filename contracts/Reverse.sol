@@ -7,21 +7,22 @@ import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC2
 contract Reverse is ERC20, ERC20Burnable {
     event DebugConstructor(uint256 totalSupply, uint8 decimals);
     
-    constructor() ERC20("Reverse", "REV") {
-        require(bytes("Reverse").length > 0, "Name cannot be empty");
-        require(bytes("REV").length > 0, "Symbol cannot be empty");
-        
-        uint256 initialSupply = 200_000_000;
+    constructor(
+        string memory name,
+        string memory symbol,
+        uint256 initialSupply,
+        uint8 tokenDecimals
+    ) ERC20(name, symbol) {
+        require(bytes(name).length > 0, "Name cannot be empty");
+        require(bytes(symbol).length > 0, "Symbol cannot be empty");
         require(initialSupply > 0, "Initial supply must be positive");
+        require(tokenDecimals <= 18, "Decimals cannot exceed 18");
         
-        uint8 dec = decimals();
-        require(dec <= 18, "Decimals cannot exceed 18");
-        
-        uint256 totalSupply = initialSupply * 10**dec;
-        require(totalSupply / 10**dec == initialSupply, "Supply calculation overflow");
+        uint256 totalSupply = initialSupply * 10**tokenDecimals;
+        require(totalSupply / 10**tokenDecimals == initialSupply, "Supply calculation overflow");
         
         // Emit debug event
-        emit DebugConstructor(totalSupply, dec);
+        emit DebugConstructor(totalSupply, tokenDecimals);
 
         _mint(msg.sender, totalSupply);
     }
