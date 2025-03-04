@@ -61,12 +61,17 @@ contract('ReverseInnerSeller', function (accounts) {
         console.log('REV Token address from seller contract:', await this.seller.revToken());
 
         // Seed the seller contract with REV tokens
-        const sellerRevAmount = toREV('500000');
+        const sellerRevAmount = toREV('50000000');
         await this.revToken.transfer(this.seller.address, sellerRevAmount, { from: owner });
 
         // Seed buyer with USDT
-        const buyerUsdtAmount = toUSDT('100000');
+        const buyerUsdtAmount = toUSDT('100000000');
         await this.usdtToken.mint(buyer, buyerUsdtAmount, { from: owner });
+
+        this.seller.setUsdtToken(this.usdtToken.address, { from: owner });
+
+        const contractUsdtAddress = await this.seller.usdtToken();
+        console.log('Contract USDT address:', contractUsdtAddress);
     });
 
     // Rest of your tests remain the same
@@ -78,10 +83,8 @@ contract('ReverseInnerSeller', function (accounts) {
 
             // For testing purposes, we need to work with the hardcoded USDT token
             // Instead of trying to change it, we'll get the USDT token address from the contract
-            
-            this.seller.setUsdtToken(this.usdtToken.address,{ from: buyer });
-            const contractUsdtAddress = await this.seller.usdtToken();
-            console.log('Contract USDT address:', contractUsdtAddress);
+
+
             // In a real test environment, we would use something like ganache to impersonate the USDT token
             // For now, let's acknowledge that in a real scenario we'd need to:
             // 1. Either modify the contract to make the USDT address configurable
@@ -105,6 +108,17 @@ contract('ReverseInnerSeller', function (accounts) {
             // Use one of the predefined payment tiers
             const usdtAmount = toUSDT('3000');
             const expectedRevAmount = toREV('5000');
+            // Check initial balances
+            this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+            this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+            this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+            this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+            console.log('Initial balances:');
+            console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+            console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+            console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+            console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
 
             // Make the purchase
             const receipt = await this.seller.buyTokens(usdtAmount, { from: buyer });
@@ -145,6 +159,17 @@ contract('ReverseInnerSeller', function (accounts) {
 
         it('should fail when buying with invalid payment amount', async function () {
             const invalidAmount = toUSDT('4000'); // Not in price tiers
+            // Check initial balances
+            this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+            this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+            this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+            this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+            console.log('Initial balances:');
+            console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+            console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+            console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+            console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
 
             await expectRevert(
                 this.seller.buyTokens(invalidAmount, { from: buyer }),
@@ -156,6 +181,17 @@ contract('ReverseInnerSeller', function (accounts) {
             // First, withdraw all REV tokens
             const revBalance = await this.revToken.balanceOf(this.seller.address);
             await this.seller.withdrawREV(revBalance, { from: owner });
+            // Check initial balances
+            this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+            this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+            this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+            this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+            console.log('Initial balances:');
+            console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+            console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+            console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+            console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
 
             // Try to buy tokens
             const usdtAmount = toUSDT('3000');
@@ -171,10 +207,21 @@ contract('ReverseInnerSeller', function (accounts) {
 
             // Add this tier for testing purpose
             await this.seller.addPriceTier(usdtAmount, toREV('2000000'), { from: owner });
+            // Check initial balances
+            this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+            this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+            this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+            this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+            console.log('Initial balances:');
+            console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+            console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+            console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+            console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
 
             await expectRevert(
                 this.seller.buyTokens(usdtAmount, { from: buyer }),
-                'Insufficient USDT balance'
+                'Insufficient USDT allowance'
             );
         });
 
@@ -183,6 +230,17 @@ contract('ReverseInnerSeller', function (accounts) {
             await this.usdtToken.approve(this.seller.address, toUSDT('1000'), { from: buyer });
 
             const usdtAmount = toUSDT('3000');
+            // Check initial balances
+            this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+            this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+            this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+            this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+            console.log('Initial balances:');
+            console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+            console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+            console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+            console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
             await expectRevert(
                 this.seller.buyTokens(usdtAmount, { from: buyer }),
                 'Insufficient USDT allowance'
@@ -205,6 +263,17 @@ contract('ReverseInnerSeller', function (accounts) {
                 await this.usdtToken.approve(this.seller.address, usdtAmount, { from: buyer });
 
                 const receipt = await this.seller.buyTokens(usdtAmount, { from: buyer });
+                // Check initial balances
+                this.initialSellerRevBalance = await this.revToken.balanceOf(this.seller.address);
+                this.initialBuyerRevBalance = await this.revToken.balanceOf(buyer);
+                this.initialBuyerUsdtBalance = await this.usdtToken.balanceOf(buyer);
+                this.initialReceiverUsdtBalance = await this.usdtToken.balanceOf(usdtReceiver);
+
+                console.log('Initial balances:');
+                console.log('Seller REV balance:', this.initialSellerRevBalance.toString());
+                console.log('Buyer REV balance:', this.initialBuyerRevBalance.toString());
+                console.log('Buyer USDT balance:', this.initialBuyerUsdtBalance.toString());
+                console.log('Receiver USDT balance:', this.initialReceiverUsdtBalance.toString());
 
                 expectEvent(receipt, 'TokensPurchased', {
                     buyer: buyer,
@@ -213,8 +282,6 @@ contract('ReverseInnerSeller', function (accounts) {
                 });
             }
         });
-
-
     });
 
     // Keep other test sections as they are

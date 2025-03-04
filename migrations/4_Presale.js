@@ -9,7 +9,7 @@ module.exports = async function(deployer, network, accounts) {
         
         // 2. Deploy ReverseInnerSeller with manually specified USDT address
         // Note: Replace this address with the actual USDT receiver address before deployment
-        const usdtReceiverAddress = "0x45b0dEB4E7f4B4A3B31321d44a7dE4d0406A45cf"; 
+        const usdtReceiverAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7"; 
         
         console.log("Deploying ReverseInnerSeller...");
         await deployer.deploy(
