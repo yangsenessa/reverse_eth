@@ -8,7 +8,3 @@ Compiling your contracts...
    >   "method": "eth_blockNumber",
    >   "params": []
    > }
-> Something went wrong while attempting to connect to the network at http://127.0.0.1:7545. Check your network configuration.
-CONNECTION ERROR: Couldn't connect to node http://127.0.0.1:7545.
-Truffle v5.11.5 (core: 5.11.5)
-Node v18.17.0
