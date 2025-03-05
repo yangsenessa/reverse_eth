@@ -83,15 +83,25 @@ module.exports = {
       gasPrice: 20000000000,  // 20 gwei
     },
     mainnet: {
-      provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${PROJECT_ID}`),
+      provider: () => new HDWalletProvider(MNEMONIC, `wss://mainnet.infura.io/ws/v3/${PROJECT_ID}`),
       network_id: 1,           // Mainnet's network id
       gas: 800000000,           // Adjust gas limit (be careful on mainnet)
       gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
       confirmations: 2,       // Wait for 2 block confirmations
       timeoutBlocks: 200,     // Timeout if blocks take too long
       skipDryRun: false,      // Run dry-run before real deployment
-      networkCheckTimeout: 10000 // Timeout in ms for network verification
-    }
+      networkCheckTimeout: 100000 // Timeout in ms for network connection
+    },
+    sepolia: {
+      provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/${PROJECT_ID}`),
+      network_id: "*",      // Sepolia's network id
+      gas: 5500000,             // Gas limit used for deploys
+      gasPrice: 10000000000,    // 10 gwei
+      confirmations: 2,         // Wait for 2 block confirmations
+      timeoutBlocks: 200,       // Timeout if blocks take too long
+      networkCheckTimeout: 10000, // Timeout in ms for network connection
+      skipDryRun: true          // Skip dry run before migrations
+    },
     //
     // An additional network, but with some advanced options…
     // advanced: {
