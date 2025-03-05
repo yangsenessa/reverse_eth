@@ -306,3 +306,194 @@ async function recoverTokens(tokenAddress, amount) {
     - USDT uses 6 decimals (`parseUnits(amount, 6)`)
 - Always ensure you have sufficient gas for transactions
 - For the ReverseInnerSeller contract, you must approve USDT spending before buying REV tokens
+
+# Smart Contract API Documentation for Frontend Developers
+## Token Approval Guide for USDT Transactions
+
+Before interacting with contracts that require USDT transfers on your behalf (like the ReverseInnerSeller contract), you must first approve the contract to spend your USDT tokens. This is a standard ERC-20 security mechanism.
+
+### Understanding Token Approvals
+
+Token approval is a two-step process:
+1. **Approve**: User grants permission to a contract to transfer specific tokens
+2. **Transfer**: The approved contract can then transfer tokens on behalf of the user
+
+### How to Implement USDT Approval
+
+#### Using ethers.js v5
+
+```javascript
+async function approveUSDT(spenderContractAddress, amount) {
+    try {
+        // Initialize provider and signer
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        
+        // USDT contract address (Ethereum Mainnet)
+        const usdtAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+        
+        // USDT uses 6 decimal places
+        const amountToApprove = ethers.utils.parseUnits(amount.toString(), 6);
+        
+        // Create USDT contract instance
+        const usdtContract = new ethers.Contract(
+            usdtAddress,
+            ['function approve(address spender, uint256 amount) returns (bool)'],
+            signer
+        );
+        
+        // Send approval transaction
+        const tx = await usdtContract.approve(spenderContractAddress, amountToApprove);
+        
+        // Wait for transaction confirmation
+        const receipt = await tx.wait();
+        console.log('Approval successful:', receipt.transactionHash);
+        return receipt;
+    } catch (error) {
+        console.error('Approval failed:', error.message);
+        throw error;
+    }
+}
+```
+
+#### Using ethers.js v6
+
+```typescript
+import { ethers } from 'ethers';
+
+async function approveUSDT(
+    provider: ethers.BrowserProvider,
+    spenderAddress: string,
+    amount: number
+): Promise<ethers.TransactionReceipt> {
+    // Get the signer
+    const signer = await provider.getSigner();
+    const signerAddress = await signer.getAddress();
+    
+    // USDT contract address (Ethereum Mainnet)
+    const usdtAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+    
+    // Parse amount with 6 decimals (USDT standard)
+    const amountToApprove = ethers.parseUnits(amount.toString(), 6);
+    
+    // Create contract instance
+    const usdtContract = new ethers.Contract(
+        usdtAddress,
+        ['function approve(address, uint256) returns (bool)', 
+         'function allowance(address, address) view returns (uint256)'],
+        signer
+    );
+    
+    // Check current allowance
+    const currentAllowance = await usdtContract.allowance(signerAddress, spenderAddress);
+    console.log(`Current allowance: ${ethers.formatUnits(currentAllowance, 6)} USDT`);
+    
+    // If current allowance is sufficient, no need for a new approval
+    if (currentAllowance >= amountToApprove) {
+        console.log('Current allowance is sufficient');
+        return null;
+    }
+    
+    // Send approval transaction
+    const tx = await usdtContract.approve(spenderAddress, amountToApprove);
+    console.log('Approval transaction sent:', tx.hash);
+    
+    // Wait for confirmation
+    const receipt = await tx.wait();
+    console.log('Approval confirmed in block:', receipt.blockNumber);
+    
+    return receipt;
+}
+```
+
+### Best Practices
+
+1. **Check existing allowance** before sending a new approval transaction
+2. **Set exact amounts** rather than unlimited approvals (max uint256) for better security
+3. **Handle transaction rejection** by the user or network errors
+4. **Provide feedback** to users during the approval process
+5. **Reset allowance** to zero before setting a new value to prevent certain smart contract vulnerabilities
+
+### Implementation in a React Component
+
+```jsx
+import React, { useState } from 'react';
+import { ethers } from 'ethers';
+
+function USDTApprovalButton({ spenderAddress, amount, onSuccess }) {
+    const [isApproving, setIsApproving] = useState(false);
+    const [error, setError] = useState(null);
+    
+    async function handleApproval() {
+        setIsApproving(true);
+        setError(null);
+        
+        try {
+            // Request connection to wallet
+            if (!window.ethereum) throw new Error("No Ethereum wallet found");
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const userAddress = await signer.getAddress();
+            
+            // USDT contract
+            const usdtAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+            const usdtContract = new ethers.Contract(
+                usdtAddress,
+                ['function approve(address, uint256) returns (bool)'],
+                signer
+            );
+            
+            // Approve USDT spending
+            const amountInWei = ethers.utils.parseUnits(amount.toString(), 6);
+            const tx = await usdtContract.approve(spenderAddress, amountInWei);
+            
+            // Wait for transaction to be mined
+            const receipt = await tx.wait();
+            
+            onSuccess?.(receipt);
+        } catch (err) {
+            console.error(err);
+            setError(err.message || "Failed to approve USDT");
+        } finally {
+            setIsApproving(false);
+        }
+    }
+    
+    return (
+        <div>
+            <button 
+                onClick={handleApproval} 
+                disabled={isApproving}
+            >
+                {isApproving ? 'Approving...' : `Approve ${amount} USDT`}
+            </button>
+            
+            {error && <p className="error">{error}</p>}
+        </div>
+    );
+}
+
+export default USDTApprovalButton;
+```
+
+### Checking Allowance
+
+Before initiating a purchase or transaction, check if the user has already approved enough USDT:
+
+```javascript
+async function checkUsdtAllowance(userAddress, spenderAddress) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    
+    const usdtAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+    const usdtContract = new ethers.Contract(
+        usdtAddress,
+        ['function allowance(address, address) view returns (uint256)'],
+        provider
+    );
+    
+    const allowance = await usdtContract.allowance(userAddress, spenderAddress);
+    return ethers.utils.formatUnits(allowance, 6); // USDT uses 6 decimals
+}
+```
