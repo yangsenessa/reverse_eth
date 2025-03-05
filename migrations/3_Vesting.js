@@ -10,7 +10,11 @@ module.exports = async function (deployer, network, accounts) {
         
         if (network === 'development' || network === 'ganache') {
             // Use local accounts for testing
-            beneficiaries = accounts.slice(1, 11); // Get 10 accounts, skip deployer
+            //beneficiaries = accounts.slice(1, 11); // Get 10 accounts, skip deployer
+            beneficiaries = [
+                //"0x31905Ee8D57C05EC7E413fa327a63490DCE0E4D6"// Replace with actual addresses
+                accounts[1]
+            ];
         } else if (network === 'mainnet') {
             // For mainnet, specify actual beneficiary addresses
             beneficiaries = [
@@ -100,9 +104,10 @@ module.exports = async function (deployer, network, accounts) {
             if ((network === 'development' || network === 'ganache') && tokenAddress) {
                 try {
                     const tokenInstance = await ReverseToken.at(tokenAddress);
+                    console.log(`  - Token instance found at address: ${tokenInstance.address}`);
                     
                     // Calculate tokens based on vesting duration - just an example
-                    const tokensToVest = 100000 * (specificDuration / (365 * 24 * 60 * 60));
+                    const tokensToVest = specificDuration > 0 ? 70000000 * (specificDuration / (365 * 24 * 60 * 60)) : 70000000;
                     const tokenAmount = web3.utils.toWei(tokensToVest.toString(), 'ether');
                     
                     await tokenInstance.transfer(vestingContract.address, tokenAmount, { from: accounts[0] });

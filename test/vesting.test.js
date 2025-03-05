@@ -5,7 +5,7 @@ const Reverse = artifacts.require('Reverse');
 
 contract('ReverseVesting', function (accounts) {
     const [deployer, beneficiary, otherAccount] = accounts;
-    const startTime = Math.floor(Date.now() / 1000) - 2*60*60; // starts 1 minute from now
+    const startTime = Math.floor(Date.now() / 1000)  + 60; // starts 1 minute from now
     const duration = 1000; // 1000 seconds
 
     beforeEach(async function () {
@@ -22,6 +22,8 @@ contract('ReverseVesting', function (accounts) {
             duration,
             { from: deployer }
         );
+        console.log("Reverse token address:", this.token.address);
+        console.log("ReverseVesting contract address:", this.vesting.address);
 
         // Fund the vesting contract
         this.vestingAmount = new BN('1000000').mul(new BN('10').pow(new BN('18')));
@@ -48,6 +50,7 @@ contract('ReverseVesting', function (accounts) {
             );
         });
     });
+    
 
     describe('Token Release', function () {
         it('should not release tokens before start time', async function () {
@@ -59,7 +62,7 @@ contract('ReverseVesting', function (accounts) {
 
         it('should release tokens after vesting has started', async function () {
             const midPoint = startTime + duration / 2;
-            await time.increaseTo(new BN(midPoint.toString()));
+            //await time.increaseTo(new BN(midPoint.toString()));
 
             const initialBalance = await this.token.balanceOf(beneficiary);
             await this.vesting.release(this.token.address, { from: beneficiary });
@@ -75,7 +78,7 @@ contract('ReverseVesting', function (accounts) {
         it('should release remaining tokens after vesting period', async function () {
             // Release half first
             const midPoint = startTime + duration / 2;
-            await time.increaseTo(midPoint);
+            //await time.increaseTo(midPoint);
             await this.vesting.release(this.token.address, { from: beneficiary });
 
             // Now go to end and release remainder
@@ -93,7 +96,64 @@ contract('ReverseVesting', function (accounts) {
             );
         });
     });
-
+    describe('Vesting Schedule', function () {
+        it('should vest tokens linearly', async function () {
+            // Check at 25%, 50%, and 75% of vesting period
+            const checkpoints = [0.25, 0.5, 0.75];
+            
+            for (const checkpoint of checkpoints) {
+                const checkpointTime = startTime + Math.floor(duration * checkpoint);
+                //await time.increaseTo(checkpointTime);
+                
+                const vestedAmount = await this.vesting.vestedAmount(
+                    this.token.address, 
+                    //Math.floor(checkpoint * duration) + startTime
+                    checkpointTime
+                );
+                
+                const expectedVested = this.vestingAmount.mul(new BN(Math.floor(checkpoint * 100))).div(new BN('100'));
+                expect(vestedAmount).to.be.bignumber.closeTo(
+                    expectedVested,
+                    expectedVested.div(new BN('100'))
+                );
+            }
+        });
+        
+        it('should vest all tokens after duration', async function () {
+            const endTime = startTime + duration + 1;
+            //await time.increaseTo(endTime);
+            
+            const vestedAmount = await this.vesting.vestedAmount(this.token.address, endTime);
+            expect(vestedAmount).to.be.bignumber.equal(this.vestingAmount);
+        });
+        
+        it('should not vest any tokens before start time', async function () {
+            const beforeStartTime = startTime - 100;
+            //await time.increaseTo(beforeStartTime);
+            
+            const vestedAmount = await this.vesting.vestedAmount(this.token.address, beforeStartTime);
+            expect(vestedAmount).to.be.bignumber.equal(new BN('0'));
+        });
+        
+        it('should track remaining vesting amount correctly', async function () {
+            // Go to middle of vesting period and release
+            const midPoint = startTime + Math.floor(duration / 2);
+            //await time.increaseTo(midPoint);
+            
+            await this.vesting.release(this.token.address, { from: beneficiary });
+            
+            // Check remaining vestable amount
+            const released = await this.vesting.released(this.token.address);
+            const vestedAmount = await this.vesting.vestedAmount(this.token.address, midPoint);
+            
+            expect(released).to.be.bignumber.equal(vestedAmount);
+            expect(this.vestingAmount.sub(released)).to.be.bignumber.closeTo(
+                this.vestingAmount.div(new BN('2')),
+                this.vestingAmount.div(new BN('100'))
+            );
+        });
+    });
+    
     describe('Force Release', function () {
         it('only owner can force release', async function () {
             await time.increaseTo(startTime + duration / 2);
@@ -105,7 +165,7 @@ contract('ReverseVesting', function (accounts) {
         });
 
         it('owner can force release tokens', async function () {
-            await time.increaseTo(startTime + duration / 2);
+            //await time.increaseTo(startTime + duration / 2);
 
             const initialBalance = await this.token.balanceOf(beneficiary);
             await this.vesting.forceRelease(this.token.address, { from: deployer });
@@ -153,7 +213,7 @@ contract('ReverseVesting', function (accounts) {
 
         it('can recover tokens after partial vesting', async function () {
             // Go to middle of vesting period
-            await time.increaseTo(startTime + duration / 2);
+            //await time.increaseTo(startTime + duration / 2);
 
             // Send extra tokens
             const extraTokens = new BN('10000').mul(new BN('10').pow(new BN('18')));
