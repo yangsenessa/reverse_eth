@@ -93,18 +93,19 @@ module.exports = {
       websocket: true,    // Enable EventEmitter interface for web3 (default: false)
       pollingInterval: 18000000,    // Polling interval used for check
       disableConfirmationListener: true, // Disable confirmation listener
-      networkCheckTimeout: 100000 // Timeout in ms for network connection
+      networkCheckTimeout: 800000 // Timeout in ms for network connection
     },
     sepolia: {
       provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/${PROJECT_ID}`),
+      //provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${PROJECT_ID}`),
       network_id: "*",      // Sepolia's network id
       gas: 800000000,             // Gas limit used for deploys
       gasPrice: 50000000000,    // 10 gwei
-      //confirmations: 2,         // Wait for 2 block confirmations
+      confirmations: 2,         // Wait for 2 block confirmations
       timeoutBlocks: 2000,       // Timeout if blocks take too long
-      networkCheckTimeout: 10000, // Timeout in ms for network connection
-      //skipDryRun: true,          // Skip dry run before migrations  
-      pollingInterval: 5500000,    // Polling interval used for check
+      networkCheckTimeout: 100000, // Timeout in ms for network connection
+      skipDryRun: true,          // Skip dry run before migrations  
+      pollingInterval: 55000000,    // Polling interval used for check
       websocket: true,    // Enable EventEmitter interface for web3 (default: false)
       disableConfirmationListener: true // Disable confirmation listener
     },
