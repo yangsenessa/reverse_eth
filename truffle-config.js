@@ -83,25 +83,27 @@ module.exports = {
       gasPrice: 20000000000,  // 20 gwei
     },
     mainnet: {
-      provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${PROJECT_ID}`),
+      provider: () => new HDWalletProvider(MNEMONIC, `wss://mainnet.infura.io/ws/v3/${PROJECT_ID}`),
       network_id: 1,           // Mainnet's network id
       gas: 800000000,           // Adjust gas limit (be careful on mainnet)
       gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
       confirmations: 2,       // Wait for 2 block confirmations
       timeoutBlocks: 200,     // Timeout if blocks take too long
-      skipDryRun: false,      // Run dry-run before real deployment
+      skipDryRun: true,      // Run dry-run before real deployment
+      websocket: true,    // Enable EventEmitter interface for web3 (default: false)
       networkCheckTimeout: 100000 // Timeout in ms for network connection
     },
     sepolia: {
       provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/${PROJECT_ID}`),
-      network_id: "*",      // Sepolia's network id
-      gas: 5500000,             // Gas limit used for deploys
-      gasPrice: 10000000000,    // 10 gwei
+      network_id: 11155111,      // Sepolia's network id
+      gas: 800000000,             // Gas limit used for deploys
+      gasPrice: 30000000000,    // 10 gwei
       confirmations: 2,         // Wait for 2 block confirmations
       timeoutBlocks: 200,       // Timeout if blocks take too long
       networkCheckTimeout: 10000, // Timeout in ms for network connection
       skipDryRun: true,          // Skip dry run before migrations  
       pollingInterval: 1800000,    // Polling interval used for check
+      websocket: true,    // Enable EventEmitter interface for web3 (default: false)
       disableConfirmationListener: true // Disable confirmation listener
     },
     //
@@ -143,13 +145,13 @@ module.exports = {
     solc: {
       version: "0.8.20",      // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
-      //  evmVersion: "byzantium"
-      // }
+       settings: {          // See the solidity docs for advice about optimization and evmVersion
+         optimizer: {
+            enabled: true,
+            runs: 200
+        },
+        evmVersion: "byzantium"
+       }
     }
   },
 
