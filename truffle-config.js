@@ -88,24 +88,24 @@ module.exports = {
       gas: 800000000,           // Adjust gas limit (be careful on mainnet)
       gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
       confirmations: 2,       // Wait for 2 block confirmations
-      timeoutBlocks: 200,     // Timeout if blocks take too long
+      timeoutBlocks: 200000000000,     // Timeout if blocks take too long
       skipDryRun: true,      // Run dry-run before real deployment
       websocket: true,    // Enable EventEmitter interface for web3 (default: false)
-      pollingInterval: 18000000,    // Polling interval used for check
+      pollingInterval: 8800000000,    // Polling interval used for check
       disableConfirmationListener: true, // Disable confirmation listener
-      networkCheckTimeout: 800000 // Timeout in ms for network connection
+      networkCheckTimeout: 800000000 // Timeout in ms for network connection
     },
     sepolia: {
-      provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/${PROJECT_ID}`),
-      //provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${PROJECT_ID}`),
+      //provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/5ff568625d074859a8c01b711217f395`),
+      provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${PROJECT_ID}`),
       network_id: "*",      // Sepolia's network id
       gas: 800000000,             // Gas limit used for deploys
-      gasPrice: 50000000000,    // 10 gwei
+      gasPrice: 50000000000000,    // 10 gwei
       confirmations: 2,         // Wait for 2 block confirmations
-      timeoutBlocks: 2000,       // Timeout if blocks take too long
-      networkCheckTimeout: 100000, // Timeout in ms for network connection
+      timeoutBlocks: 20000000,       // Timeout if blocks take too long
+      networkCheckTimeout: 1000000000, // Timeout in ms for network connection
       skipDryRun: true,          // Skip dry run before migrations  
-      pollingInterval: 55000000,    // Polling interval used for check
+      pollingInterval: 55000000000000,    // Polling interval used for check
       websocket: true,    // Enable EventEmitter interface for web3 (default: false)
       disableConfirmationListener: true // Disable confirmation listener
     },
