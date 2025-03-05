@@ -75,23 +75,23 @@ module.exports = {
       gas: 80000000,           // Increased gas limit
       gasPrice: 2000000000,  // 20 gwei
     },
-   ganache: { // Ganache local test RPC blockchain
+    ganache: { // Ganache local test RPC blockchain
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
-      gas:30000000,           // Increased gas limit
+      gas: 30000000,           // Increased gas limit
       gasPrice: 20000000000,  // 20 gwei
-  },
-  mainnet: {
-    provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${PROJECT_ID}`),
-    network_id: 1,           // Mainnet's network id
-    gas: 800000000,           // Adjust gas limit (be careful on mainnet)
-    gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
-    confirmations: 2,       // Wait for 2 block confirmations
-    timeoutBlocks: 200,     // Timeout if blocks take too long
-    skipDryRun: false,      // Run dry-run before real deployment
-    networkCheckTimeout: 10000 // Timeout in ms for network verification
-  }
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${PROJECT_ID}`),
+      network_id: 1,           // Mainnet's network id
+      gas: 800000000,           // Adjust gas limit (be careful on mainnet)
+      gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
+      confirmations: 2,       // Wait for 2 block confirmations
+      timeoutBlocks: 200,     // Timeout if blocks take too long
+      skipDryRun: false,      // Run dry-run before real deployment
+      networkCheckTimeout: 10000 // Timeout in ms for network verification
+    }
     //
     // An additional network, but with some advanced options…
     // advanced: {
