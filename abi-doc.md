@@ -307,7 +307,6 @@ async function recoverTokens(tokenAddress, amount) {
 - Always ensure you have sufficient gas for transactions
 - For the ReverseInnerSeller contract, you must approve USDT spending before buying REV tokens
 
-# Smart Contract API Documentation for Frontend Developers
 ## Token Approval Guide for USDT Transactions
 
 Before interacting with contracts that require USDT transfers on your behalf (like the ReverseInnerSeller contract), you must first approve the contract to spend your USDT tokens. This is a standard ERC-20 security mechanism.
