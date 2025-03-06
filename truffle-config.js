@@ -102,7 +102,7 @@ module.exports = {
       gas: 8000000,             // Gas limit used for deploys
       gasPrice: 3000000000,    // 10 gwei
       confirmations: 2,         // Wait for 2 block confirmations
-      timeoutBlocks: 200,       // Timeout if blocks take too long
+      timeoutBlocks: 20000,       // Timeout if blocks take too long
       networkCheckTimeout: 5000000, // Timeout in ms for network connection
       skipDryRun: true,          // Skip dry run before migrations  
       pollingInterval: 8800000000000,    // Polling interval used for check
