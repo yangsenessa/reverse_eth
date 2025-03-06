@@ -1,47 +1,18 @@
 
 Compiling your contracts...
 ===========================
-> Compiling @openzeppelin\contracts\access\Ownable.sol
-> Compiling @openzeppelin\contracts\finance\VestingWallet.sol
-> Compiling @openzeppelin\contracts\interfaces\IERC1363.sol
-> Compiling @openzeppelin\contracts\interfaces\IERC165.sol
-> Compiling @openzeppelin\contracts\interfaces\IERC20.sol
-> Compiling @openzeppelin\contracts\interfaces\draft-IERC6093.sol
-> Compiling @openzeppelin\contracts\token\ERC20\ERC20.sol
-> Compiling @openzeppelin\contracts\token\ERC20\IERC20.sol
-> Compiling @openzeppelin\contracts\token\ERC20\extensions\ERC20Burnable.sol
-> Compiling @openzeppelin\contracts\token\ERC20\extensions\IERC20Metadata.sol
-> Compiling @openzeppelin\contracts\token\ERC20\utils\SafeERC20.sol
-> Compiling @openzeppelin\contracts\utils\Address.sol
-> Compiling @openzeppelin\contracts\utils\Context.sol
-> Compiling @openzeppelin\contracts\utils\Errors.sol
-> Compiling @openzeppelin\contracts\utils\ReentrancyGuard.sol
-> Compiling @openzeppelin\contracts\utils\introspection\IERC165.sol
-> Compiling .\contracts\Airdrop.sol
-> Compiling .\contracts\Reverse.sol
-> Compiling .\contracts\ReverseInnerSeller.sol
-> Compiling .\contracts\Vesting.sol
-> Compiling .\contracts\mocks\MockERC20.sol
-> Compilation warnings encountered:
-
-    Warning: This declaration shadows an existing declaration.
-  --> project:/contracts/mocks/MockERC20.sol:19:59:
-   |
-19 |     constructor(string memory name, string memory symbol, uint8 decimals) ERC20(name, symbol) {
-   |                                                           ^^^^^^^^^^^^^^
-Note: The shadowed declaration is here:
-  --> project:/contracts/mocks/MockERC20.sol:35:5:
-   |
-35 |     function decimals() public view virtual override returns (uint8) {
-   |     ^ (Relevant source part starts here and spans across multiple lines).
-
-
-> Artifacts written to D:\project\reverse_eth\build\contracts
-> Compiled successfully using:
-   - solc: 0.8.20+commit.a1b79de6.Emscripten.clang
-   > {
-   >   "jsonrpc": "2.0",
-   >   "id": 1,
-   >   "method": "eth_blockNumber",
-   >   "params": []
-   > }
+> Everything is up to date, there is nothing to compile.
+Error: First argument to new HDWalletProvider() must be a mnemonic phrase, a single private key, or a list of private keys. Received: ""
+    at getSigningAuthorityOptions (/root/eth/reverse_eth/node_modules/@truffle/hdwallet-provider/src/constructor/getOptions.ts:49:11)
+    at fromArguments (/root/eth/reverse_eth/node_modules/@truffle/hdwallet-provider/src/constructor/getOptions.ts:87:28)
+    at getOptions (/root/eth/reverse_eth/node_modules/@truffle/hdwallet-provider/src/constructor/getOptions.ts:138:12)
+    at new HDWalletProvider (/root/eth/reverse_eth/node_modules/@truffle/hdwallet-provider/src/index.ts:75:19)
+    at Object.provider (/root/eth/reverse_eth/truffle-config.js:86:23)
+    at Object.getProvider (/root/n/lib/node_modules/truffle/build/webpack:/packages/provider/index.js:20:1)
+    at Object.create (/root/n/lib/node_modules/truffle/build/webpack:/packages/provider/index.js:13:1)
+    at TruffleConfig.get [as provider] (/root/n/lib/node_modules/truffle/build/webpack:/packages/config/dist/configDefaults.js:276:1)
+    at Object.detect (/root/n/lib/node_modules/truffle/build/webpack:/packages/environment/environment.js:19:1)
+    at Object.module.exports [as run] (/root/n/lib/node_modules/truffle/build/webpack:/packages/core/lib/commands/migrate/run.js:19:1)
+    at runCommand (/root/n/lib/node_modules/truffle/build/webpack:/packages/core/lib/command-utils.js:297:1)
+Truffle v5.11.5 (core: 5.11.5)
+Node v18.20.7
