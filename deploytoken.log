@@ -45,3 +45,48 @@ Note: The shadowed declaration is here:
    >   "method": "eth_blockNumber",
    >   "params": []
    > }
+UnhandledRejections detected
+Promise {
+  <rejected> {
+    code: -32603,
+    message: 'Too Many Requests',
+    data: { originalError: {} }
+  }
+} {
+  code: -32603,
+  message: 'Too Many Requests',
+  data: { originalError: {} }
+}
+Promise {
+  <rejected> {
+    code: -32603,
+    message: 'Too Many Requests',
+    data: { originalError: {} }
+  }
+} {
+  code: -32603,
+  message: 'Too Many Requests',
+  data: { originalError: {} }
+}
+Promise {
+  <rejected> {
+    code: -32603,
+    message: 'Too Many Requests',
+    data: { originalError: {} }
+  }
+} {
+  code: -32603,
+  message: 'Too Many Requests',
+  data: { originalError: {} }
+}
+Promise {
+  <rejected> {
+    code: -32603,
+    message: 'Too Many Requests',
+    data: { originalError: {} }
+  }
+} {
+  code: -32603,
+  message: 'Too Many Requests',
+  data: { originalError: {} }
+}
