@@ -47,46 +47,80 @@ Note: The shadowed declaration is here:
    > }
 UnhandledRejections detected
 Promise {
-  <rejected> {
-    code: -32603,
-    message: 'Too Many Requests',
-    data: { originalError: {} }
-  }
-} {
-  code: -32603,
-  message: 'Too Many Requests',
-  data: { originalError: {} }
-}
+  <rejected> Error: Too Many Requests
+      at WebsocketSubprovider._handleSocketMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\web3-provider-engine\subproviders\websocket.js:121:18)
+      at WebSocket.onMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\event-target.js:120:16)
+      at WebSocket.emit (node:events:513:28)
+      at Receiver.receiverOnMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:720:20)
+      at Receiver.emit (node:events:513:28)
+      at Receiver.dataMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:414:14)
+      at Receiver.getData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:346:17)
+      at Receiver.startLoop (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:133:22)
+      at Receiver._write (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:69:10)
+      at writeOrBuffer (node:internal/streams/writable:392:12)
+      at _write (node:internal/streams/writable:333:10)
+      at Receiver.Writable.write (node:internal/streams/writable:337:10)
+      at TLSSocket.socketOnData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:795:35)
+      at TLSSocket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at TLSSocket.Readable.push (node:internal/streams/readable:234:10)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:190:23)
+} Error: Too Many Requests
+    at WebsocketSubprovider._handleSocketMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\web3-provider-engine\subproviders\websocket.js:121:18)
+    at WebSocket.onMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\event-target.js:120:16)
+    at WebSocket.emit (node:events:513:28)
+    at Receiver.receiverOnMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:720:20)
+    at Receiver.emit (node:events:513:28)
+    at Receiver.dataMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:414:14)
+    at Receiver.getData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:346:17)
+    at Receiver.startLoop (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:133:22)
+    at Receiver._write (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:69:10)
+    at writeOrBuffer (node:internal/streams/writable:392:12)
+    at _write (node:internal/streams/writable:333:10)
+    at Receiver.Writable.write (node:internal/streams/writable:337:10)
+    at TLSSocket.socketOnData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:795:35)
+    at TLSSocket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:324:12)
+    at readableAddChunk (node:internal/streams/readable:297:9)
+    at TLSSocket.Readable.push (node:internal/streams/readable:234:10)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:190:23)
 Promise {
-  <rejected> {
-    code: -32603,
-    message: 'Too Many Requests',
-    data: { originalError: {} }
-  }
-} {
-  code: -32603,
-  message: 'Too Many Requests',
-  data: { originalError: {} }
-}
-Promise {
-  <rejected> {
-    code: -32603,
-    message: 'Too Many Requests',
-    data: { originalError: {} }
-  }
-} {
-  code: -32603,
-  message: 'Too Many Requests',
-  data: { originalError: {} }
-}
-Promise {
-  <rejected> {
-    code: -32603,
-    message: 'Too Many Requests',
-    data: { originalError: {} }
-  }
-} {
-  code: -32603,
-  message: 'Too Many Requests',
-  data: { originalError: {} }
-}
+  <rejected> Error: Too Many Requests
+      at WebsocketSubprovider._handleSocketMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\web3-provider-engine\subproviders\websocket.js:121:18)
+      at WebSocket.onMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\event-target.js:120:16)
+      at WebSocket.emit (node:events:513:28)
+      at Receiver.receiverOnMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:720:20)
+      at Receiver.emit (node:events:513:28)
+      at Receiver.dataMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:414:14)
+      at Receiver.getData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:346:17)
+      at Receiver.startLoop (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:133:22)
+      at Receiver._write (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:69:10)
+      at writeOrBuffer (node:internal/streams/writable:392:12)
+      at _write (node:internal/streams/writable:333:10)
+      at Receiver.Writable.write (node:internal/streams/writable:337:10)
+      at TLSSocket.socketOnData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:795:35)
+      at TLSSocket.emit (node:events:513:28)
+      at addChunk (node:internal/streams/readable:324:12)
+      at readableAddChunk (node:internal/streams/readable:297:9)
+      at TLSSocket.Readable.push (node:internal/streams/readable:234:10)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:190:23)
+} Error: Too Many Requests
+    at WebsocketSubprovider._handleSocketMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\web3-provider-engine\subproviders\websocket.js:121:18)
+    at WebSocket.onMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\event-target.js:120:16)
+    at WebSocket.emit (node:events:513:28)
+    at Receiver.receiverOnMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:720:20)
+    at Receiver.emit (node:events:513:28)
+    at Receiver.dataMessage (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:414:14)
+    at Receiver.getData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:346:17)
+    at Receiver.startLoop (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:133:22)
+    at Receiver._write (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\receiver.js:69:10)
+    at writeOrBuffer (node:internal/streams/writable:392:12)
+    at _write (node:internal/streams/writable:333:10)
+    at Receiver.Writable.write (node:internal/streams/writable:337:10)
+    at TLSSocket.socketOnData (D:\project\reverse_eth\node_modules\@truffle\hdwallet-provider\node_modules\ws\lib\websocket.js:795:35)
+    at TLSSocket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:324:12)
+    at readableAddChunk (node:internal/streams/readable:297:9)
+    at TLSSocket.Readable.push (node:internal/streams/readable:234:10)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:190:23)
