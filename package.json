@@ -29,6 +29,7 @@
     "@truffle/hdwallet-provider": "^2.1.15",
     "dotenv": "^16.4.7",
     "openzeppelin-solidity": "^1.12.0",
+    "reverse_eth": "file:",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3-core-helpers": "^1.10.4",
     "web3-provider-engine": "^17.0.1"
