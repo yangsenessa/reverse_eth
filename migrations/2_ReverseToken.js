@@ -15,7 +15,7 @@ module.exports = async function(deployer, network, accounts) {
             symbol, 
             initialSupply,
             tokenDecimals,
-            { gas: 50000000 }
+            { gas: 30000000 }
         );
 
         let finAccounts = [
