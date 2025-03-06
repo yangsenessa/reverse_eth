@@ -45,17 +45,3 @@ Note: The shadowed declaration is here:
    >   "method": "eth_blockNumber",
    >   "params": []
    > }
-UnhandledRejections detected
-Promise {
-  <rejected> {
-    code: -32603,
-    message: 'read ECONNRESET',
-    data: { originalError: [Object] }
-  }
-} {
-  code: -32603,
-  message: 'read ECONNRESET',
-  data: {
-    originalError: { errno: -4077, code: 'ECONNRESET', syscall: 'read' }
-  }
-}
