@@ -96,8 +96,8 @@ module.exports = {
       networkCheckTimeout: 800000000 // Timeout in ms for network connection
     },
     sepolia: {
-      //provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/5ff568625d074859a8c01b711217f395`),
-      provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${PROJECT_ID}`),
+      provider: () => new HDWalletProvider(MNEMONIC, `wss://sepolia.infura.io/ws/v3/5ff568625d074859a8c01b711217f395`),
+      //provider: () => new HDWalletProvider(MNEMONIC, `https://sepolia.infura.io/v3/${PROJECT_ID}`),
       network_id: "*",      // Sepolia's network id
       gas: 800000000,             // Gas limit used for deploys
       gasPrice: 50000000000000,    // 10 gwei
