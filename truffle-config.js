@@ -85,7 +85,7 @@ module.exports = {
     mainnet: {
       provider: () => new HDWalletProvider(MNEMONIC, `https://mainnet.infura.io/v3/${PROJECT_ID}`),
       network_id: "*",           // Mainnet's network id
-      gas: 800000000,           // Adjust gas limit (be careful on mainnet)
+      gas: 8000000000,           // Adjust gas limit (be careful on mainnet)
       gasPrice: 30000000000,  // 30 gwei (adjust based on current gas prices)
       confirmations: 2,       // Wait for 2 block confirmations
       timeoutBlocks: 200,     // Timeout if blocks take too long
