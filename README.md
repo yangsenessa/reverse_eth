@@ -1,4 +1,10 @@
 # reverse_eth
+
+## Project Information
+- **Compile Type**: Solidity
+- **Compile Version**: 0.8.17 (Solidity Compiler)
+- **Open Source License Type**: MIT License
+
 $ npm install -g truffle
 
 $ npm install -g ganache-cli
@@ -193,3 +199,7 @@ truffle migrate --reset --network development --verbose-rpc
 truffle test --network ganache
 truffle test ./test/ReverseInnerSeller.test.js --network ganache
 truffle test ./test/vesting.test.js --network ganache
+
+
+
+
