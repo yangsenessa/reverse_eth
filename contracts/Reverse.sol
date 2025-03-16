@@ -6,6 +6,7 @@ import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC2
 
 contract Reverse is ERC20, ERC20Burnable {
     event DebugConstructor(uint256 totalSupply, uint8 decimals);
+    uint8 private _decimals;
     
     constructor(
         string memory name,
@@ -18,6 +19,7 @@ contract Reverse is ERC20, ERC20Burnable {
         require(initialSupply > 0, "Initial supply must be positive");
         require(tokenDecimals <= 18, "Decimals cannot exceed 18");
         
+        _decimals = tokenDecimals;
         uint256 totalSupply = initialSupply * 10**tokenDecimals;
         require(totalSupply / 10**tokenDecimals == initialSupply, "Supply calculation overflow");
         
@@ -27,7 +29,7 @@ contract Reverse is ERC20, ERC20Burnable {
         _mint(msg.sender, totalSupply);
     }
 
-    function decimals() public pure virtual override returns (uint8) {
-        return 18;
+    function decimals() public view virtual override returns (uint8) {
+        return _decimals;
     }
 }

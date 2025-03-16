@@ -1,0 +1,27 @@
+# RECOMMENDED: Use Remix IDE for flattening
+# Go to https://remix.ethereum.org/
+# Upload your contract files and OpenZeppelin dependencies
+# Right-click on Reverse.sol and select "Flatten"
+# This works best with newer Solidity syntax (0.8.x)
+
+# Alternative: Manual Flattening (since automated tools are failing)
+# 1. Create a file named Reverse_flattened.sol
+# 2. Follow the structure in the Reverse_flattened_template.sol file
+# 3. Copy OpenZeppelin contracts in correct inheritance order:
+#    - Context.sol
+#    - IERC20.sol
+#    - IERC20Metadata.sol
+#    - ERC20.sol
+#    - ERC20Burnable.sol
+# 4. Remove duplicate SPDX and pragma statements (keep only the first one)
+# 5. Add your Reverse contract at the end
+
+# Install Hardhat and try again if you haven't:
+npm install --save-dev hardhat
+# Create hardhat.config.js if not exists
+echo "module.exports = { solidity: '0.8.20' };" > hardhat.config.js
+npx hardhat flatten contracts/Reverse.sol > Reverse_flattened.sol
+
+# Debugging OpenZeppelin version:
+# Make sure you have the right version installed:
+npm install @openzeppelin/contracts@5.0.0
