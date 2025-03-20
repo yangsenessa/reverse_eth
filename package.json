@@ -35,10 +35,11 @@
     "web3-provider-engine": "^17.0.1"
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^4.9.3",
+    "@openzeppelin/contracts": "^5.2.0",
     "@openzeppelin/test-helpers": "^0.5.16",
     "chai": "^4.5.0",
     "ganache-cli": "^6.12.2",
-    "hardhat": "^2.22.19"
+    "hardhat": "^2.22.19",
+    "truffle-plugin-verify": "^0.6.7"
   }
 }

@@ -46,7 +46,7 @@ require('dotenv').config();
 if (!process.env.MNEMONIC || !process.env.PROJECT_ID) {
   console.error('Error: Please ensure that .env file contains MNEMONIC and PROJECT_ID');
 }
-const { MNEMONIC, PROJECT_ID } = process.env;
+const { MNEMONIC, PROJECT_ID, etherscanApiKey} = process.env;
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 
@@ -157,6 +157,12 @@ module.exports = {
        }
     }
   },
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+  api_keys: {
+    etherscan: etherscanApiKey
+  }
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:
   // false to enabled: true. The default storage location can also be
